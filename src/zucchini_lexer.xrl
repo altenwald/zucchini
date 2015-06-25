@@ -1,7 +1,8 @@
 Definitions.
 
-A = [a-zA-Z][a-zA-Z0-9_:@\-\.]*[a-zA-Z0-9]
-D = [0-9]
+A = [a-zA-Z][a-zA-Z0-9_:@\-\.\s]*[a-zA-Z0-9]
+D = -?[0-9]+
+F = -?[0-9]+\.[0-9]+
 S = [\s\t]
 
 Rules.
@@ -11,9 +12,9 @@ Rules.
 {S}*\[ : {token,{'[',TokenLine}}.
 {S}*{A}+{S}*\] : {token,{key,TokenLine,to_key(TokenChars,TokenLen)},"]"}.
 {S}*{A}+{S}*= : {token,{key,TokenLine,to_key(TokenChars,TokenLen)},"="}.
-{S}*{A}+ : {token,{value,TokenLine,to_atom(TokenChars)}}.
+{S}*{A}+ : {token,{value,TokenLine,to_binary(TokenChars)}}.
 {S}*{D}+ : {token,{value,TokenLine,to_integer(TokenChars)}}.
-{S}*{D}+\.{D}+ : {token,{value,TokenLine,to_float(TokenChars)}}.
+{S}*{F}+ : {token,{value,TokenLine,to_float(TokenChars)}}.
 {S}*".+" : {token,{value,TokenLine,to_string(TokenChars)}}.
 {S}*[^=\[;""\n]+ : {token,{value,TokenLine,string:strip(TokenChars)}}.
 ;.* : skip_token.
@@ -25,11 +26,11 @@ Erlang code.
 to_key(TokenChars, TokenLen) ->
     S = string:substr(TokenChars, 1, TokenLen-1),
     K = string:strip(S),
-    list_to_atom(K).
+    list_to_binary(K).
 
--compile({inline, to_atom/1}).
-to_atom(TokenChars) ->
-    list_to_atom(string:strip(TokenChars, left)).
+-compile({inline, to_binary/1}).
+to_binary(TokenChars) ->
+    list_to_binary(string:strip(TokenChars, left)).
 
 -compile({inline, to_integer/1}).
 to_integer(TokenChars) ->
@@ -42,4 +43,5 @@ to_float(TokenChars) ->
 -compile({inline, to_string/1}).
 to_string(TokenChars) ->
     S = string:strip(TokenChars, left),
-    string:substr(S, 2, length(S)-2).
+    list_to_binary(string:substr(S, 2, length(S)-2)).
+

@@ -18,13 +18,14 @@ Zucchini - An Erlang INI parser
 1> weight = 0.3
 1> amount = 3
 1> ").
-{ok,[{pumpkin,[{variety,winter},
-               {name,"Pumpkin"},
-               {fortune,"Pumpkin carving = Awesome"},
-               {weight,3.3},
-               {amount,2}]},
-     {yellow,[{variety,summer},
-              {name,"Yellow Squash"},
-              {weight,0.3},
-              {amount,3}]}]}
+{ok,[{<<"pumpkin">>,[{<<"variety">>,<<"winter">>},
+               {<<"name">>,<<"Pumpkin">>},
+               {<<"fortune">>,<<"Pumpkin carving = Awesome">>},
+               {<<"weight">>,3.3},
+               {<<"amount">>,2}]},
+     {<<"yellow">>,[{<<"variety">>,<<"summer">>},
+              {<<"name">>,<<"Yellow Squash">>},
+              {<<"weight">>,0.3},
+              {<<"amount">>,3}]}]}
 ```
+

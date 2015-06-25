@@ -8,11 +8,13 @@ sections -> section : ['$1'].
 sections -> section sections : ['$1' | '$2'].
 
 section -> '[' key ']' properties : {value_of('$2'), '$4'}.
+section -> '[' key ']' : {value_of('$2'), []}.
 
 properties -> property : ['$1'].
 properties -> property properties : ['$1' | '$2'].
 
 property -> key '=' value : {value_of('$1'), value_of('$3')}.
+property -> key '=' : {value_of('$1'), undefined}.
 
 Erlang code.
 
