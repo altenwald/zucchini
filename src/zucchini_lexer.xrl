@@ -15,8 +15,8 @@ Rules.
 {S}*{A}+ : {token,{value,TokenLine,to_binary(TokenChars)}}.
 {S}*{D}+ : {token,{value,TokenLine,to_integer(TokenChars)}}.
 {S}*{F}+ : {token,{value,TokenLine,to_float(TokenChars)}}.
-{S}*".+" : {token,{value,TokenLine,to_string(TokenChars)}}.
-{S}*[^=\[;""\n]+ : {token,{value,TokenLine,string:strip(TokenChars)}}.
+{S}*".+" : {token,{value,TokenLine,to_binary(TokenChars)}}.
+{S}*[^=\[;""\n]+ : {token,{value,TokenLine,to_binary(string:strip(TokenChars))}}.
 ;.* : skip_token.
 [\000-\s]+ : skip_token.
 
@@ -39,9 +39,3 @@ to_integer(TokenChars) ->
 -compile({inline, to_float/1}).
 to_float(TokenChars) ->
     list_to_float(string:strip(TokenChars, left)).
-
--compile({inline, to_string/1}).
-to_string(TokenChars) ->
-    S = string:strip(TokenChars, left),
-    list_to_binary(string:substr(S, 2, length(S)-2)).
-
