@@ -1,6 +1,11 @@
 {application, zucchini, [
     {description, "An Erlang INI parser"},
-    {vsn, "0.1"},
+    {vsn, "0.1.0"},
     {applications, [kernel, stdlib]},
-    {registered, []}
+    {registered, []},
+    {maintainers, ["Manuel Rubio"]},
+    {licenses, ["unlicense"]},
+    {links, [
+        {"Github", "https://github.com/altenwald/zucchini"}
+    ]}
 ]}.
